@@ -1,0 +1,429 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <meta name="description" content="IVIS Labs builds intelligent digital products, AI solutions and cloud-powered experiences." />
+  <title>IVIS Labs — Build What's Next</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=DM+Sans:wght@400;500;600;700&family=Space+Grotesk:wght@400;500;600;700&display=swap" rel="stylesheet">
+  <style>
+    :root {
+      --bg: #080b13; --panel: #101625; --panel-2: #141d2e; --text: #f4f7ff;
+      --muted: #9aa6bc; --line: rgba(255,255,255,.10); --cyan: #65e6dc;
+      --blue: #7798ff; --purple: #b18cff; --radius: 22px; --max: 1160px;
+    }
+    * { box-sizing: border-box; margin: 0; padding: 0; }
+    html { scroll-behavior: smooth; scroll-padding-top: 90px; }
+    body { font-family: "DM Sans", sans-serif; background: var(--bg); color: var(--text); line-height: 1.6; overflow-x: hidden; }
+    body::before { content:""; position:fixed; inset:0; z-index:-2; pointer-events:none; background:
+      radial-gradient(ellipse at 12% 8%, rgba(73,118,255,.17), transparent 32%),
+      radial-gradient(ellipse at 88% 25%, rgba(77,224,207,.10), transparent 30%),
+      radial-gradient(ellipse at 50% 90%, rgba(153,104,255,.09), transparent 35%); }
+    a { color: inherit; text-decoration: none; }
+    button, input, textarea { font: inherit; }
+    .container { width: min(var(--max), calc(100% - 48px)); margin: auto; }
+    .eyebrow { display:inline-flex; align-items:center; gap:9px; color:var(--cyan); font-size:.76rem; font-weight:700; letter-spacing:.16em; text-transform:uppercase; }
+    .eyebrow::before { content:""; width:22px; height:1px; background:var(--cyan); }
+    h1,h2,h3,.logo { font-family:"Space Grotesk",sans-serif; letter-spacing:-.04em; }
+    h2 { font-size:clamp(2rem,4vw,3.35rem); line-height:1.1; margin:15px 0; }
+    .section-copy { color:var(--muted); max-width:620px; font-size:1.02rem; }
+    .gradient-text { background:linear-gradient(100deg,var(--cyan),#8bb5ff 54%,var(--purple)); -webkit-background-clip:text; background-clip:text; color:transparent; }
+    .btn { display:inline-flex; align-items:center; justify-content:center; gap:10px; border:1px solid transparent; padding:13px 20px; border-radius:999px; font-weight:700; transition:.25s ease; cursor:pointer; }
+    .btn-primary { color:#071015; background:linear-gradient(110deg,var(--cyan),#9de9e1); box-shadow:0 10px 35px rgba(101,230,220,.16); }
+    .btn-primary:hover { transform:translateY(-3px); box-shadow:0 14px 40px rgba(101,230,220,.28); }
+    .btn-ghost { border-color:var(--line); background:rgba(255,255,255,.035); color:var(--text); }
+    .btn-ghost:hover { border-color:rgba(101,230,220,.55); background:rgba(101,230,220,.07); }
+    .arrow { font-size:1.15rem; transition:transform .2s; }
+    .btn:hover .arrow { transform:translateX(4px); }
+
+    /* Navigation */
+    .site-header { position:fixed; top:0; width:100%; z-index:20; border-bottom:1px solid transparent; transition:.25s; }
+    .site-header.scrolled { background:rgba(8,11,19,.82); backdrop-filter:blur(18px); border-color:var(--line); }
+    nav { height:78px; display:flex; align-items:center; justify-content:space-between; }
+    .logo { display:flex; align-items:center; gap:10px; font-size:1.35rem; font-weight:700; letter-spacing:-.06em; }
+    .logo-mark { width:34px; height:34px; display:grid; place-items:center; border-radius:11px; color:#071015; background:linear-gradient(135deg,var(--cyan),#829cff); font-weight:700; font-size:1rem; box-shadow:0 0 25px rgba(101,230,220,.2); }
+    .nav-links { display:flex; align-items:center; gap:32px; color:#c3ccda; font-size:.9rem; }
+    .nav-links a { transition:color .2s; }
+    .nav-links a:hover { color:var(--cyan); }
+    .nav-actions { display:flex; align-items:center; gap:12px; }
+    .nav-actions .btn { padding:10px 17px; font-size:.86rem; }
+    .menu-toggle { display:none; border:1px solid var(--line); background:var(--panel); color:white; border-radius:10px; width:42px; height:42px; font-size:1.3rem; }
+
+    /* Hero */
+    .hero { min-height:760px; display:flex; align-items:center; padding:145px 0 90px; position:relative; }
+    .hero-grid { display:grid; grid-template-columns:1.04fr .96fr; align-items:center; gap:54px; }
+    .hero h1 { font-size:clamp(3.1rem,6.2vw,5.65rem); line-height:.99; margin:23px 0; max-width:720px; }
+    .hero-copy { color:#aeb9cb; font-size:1.1rem; max-width:570px; line-height:1.8; }
+    .hero-buttons { display:flex; gap:13px; flex-wrap:wrap; margin-top:32px; }
+    .hero-note { display:flex; align-items:center; gap:12px; margin-top:35px; color:#8491a8; font-size:.83rem; }
+    .avatar-stack { display:flex; padding-left:7px; }
+    .avatar-stack span { width:27px; height:27px; border-radius:50%; border:2px solid var(--bg); margin-left:-7px; background:linear-gradient(135deg,#65e6dc,#718aff); }
+    .avatar-stack span:nth-child(2){background:linear-gradient(135deg,#b18cff,#526eff)}
+    .avatar-stack span:nth-child(3){background:linear-gradient(135deg,#ffb77a,#f078a6)}
+    .hero-visual { position:relative; min-height:480px; display:grid; place-items:center; }
+    .orb { width:min(390px,80vw); aspect-ratio:1; border-radius:50%; position:relative; background:radial-gradient(circle at 35% 30%,rgba(101,230,220,.35),transparent 28%),radial-gradient(circle at 70% 65%,rgba(126,145,255,.3),transparent 30%),linear-gradient(145deg,rgba(28,48,75,.7),rgba(10,15,28,.2)); border:1px solid rgba(143,190,255,.25); box-shadow:inset 0 0 70px rgba(95,150,255,.1),0 0 100px rgba(74,120,255,.12); animation:float 7s ease-in-out infinite; }
+    .orb::before,.orb::after { content:""; position:absolute; inset:12%; border:1px solid rgba(126,220,224,.25); border-radius:50%; transform:rotate(-28deg) scaleX(1.45); }
+    .orb::after { inset:3%; transform:rotate(55deg) scaleX(1.35); border-color:rgba(164,145,255,.24); }
+    .orb-core { position:absolute; inset:27%; border-radius:50%; display:grid; place-items:center; background:radial-gradient(circle at 35% 30%,#b2fff4,#5485c8 48%,#171d3c 78%); box-shadow:0 0 70px rgba(101,230,220,.3); color:#07131d; font-family:"Space Grotesk"; font-size:3rem; font-weight:700; }
+    .orbit { position:absolute; width:14px; height:14px; border-radius:50%; background:var(--cyan); box-shadow:0 0 22px var(--cyan); top:18%; right:19%; }
+    .float-card { position:absolute; padding:14px 17px; border:1px solid rgba(255,255,255,.13); border-radius:15px; background:rgba(16,24,40,.76); backdrop-filter:blur(15px); box-shadow:0 15px 50px rgba(0,0,0,.22); }
+    .float-card small { color:var(--muted); display:block; font-size:.72rem; }
+    .float-card strong { font-family:"Space Grotesk"; font-size:1.2rem; }
+    .float-card.one { top:13%; left:-2%; } .float-card.two { bottom:15%; right:-2%; }
+    .float-card.two strong { color:var(--cyan); }
+    .scroll-cue { position:absolute; bottom:30px; left:50%; transform:translateX(-50%); color:#65728a; font-size:.72rem; letter-spacing:.15em; text-transform:uppercase; display:flex; align-items:center; gap:10px; }
+    .scroll-cue::before { content:""; width:30px; height:1px; background:#65728a; }
+
+    /* Logo strip */
+    .trust-strip { padding:28px 0 65px; border-top:1px solid var(--line); border-bottom:1px solid var(--line); }
+    .trust-label { text-align:center; color:#6f7d94; text-transform:uppercase; letter-spacing:.15em; font-size:.7rem; margin-bottom:23px; }
+    .trust-items { display:flex; align-items:center; justify-content:space-around; flex-wrap:wrap; gap:22px; color:#a3aec0; font-family:"Space Grotesk"; font-weight:600; font-size:1rem; }
+    .trust-items span { opacity:.7; }
+
+    /* Sections */
+    section.content-section { padding:110px 0; }
+    .section-head { display:flex; justify-content:space-between; align-items:end; gap:35px; margin-bottom:48px; }
+    .section-head > div:first-child { max-width:650px; }
+    .services-grid { display:grid; grid-template-columns:repeat(3,1fr); gap:17px; }
+    .service-card { padding:30px; min-height:265px; border-radius:var(--radius); border:1px solid var(--line); background:linear-gradient(145deg,rgba(22,32,51,.88),rgba(13,19,31,.75)); transition:.3s; position:relative; overflow:hidden; }
+    .service-card::after { content:""; position:absolute; width:160px; height:160px; border-radius:50%; background:rgba(101,230,220,.08); filter:blur(35px); right:-80px; bottom:-90px; transition:.3s; }
+    .service-card:hover { transform:translateY(-7px); border-color:rgba(101,230,220,.35); }
+    .service-card:hover::after { background:rgba(101,230,220,.18); }
+    .service-icon { width:48px; height:48px; border-radius:14px; display:grid; place-items:center; color:var(--cyan); background:rgba(101,230,220,.09); border:1px solid rgba(101,230,220,.16); font-size:1.35rem; margin-bottom:25px; }
+    .service-card h3 { font-size:1.25rem; margin-bottom:10px; letter-spacing:-.03em; }
+    .service-card p { color:var(--muted); font-size:.91rem; }
+    .service-link { display:inline-flex; margin-top:20px; color:var(--cyan); font-size:.83rem; font-weight:700; }
+
+    .about-wrap { display:grid; grid-template-columns:.95fr 1.05fr; gap:75px; align-items:center; }
+    .about-art { min-height:430px; border:1px solid var(--line); border-radius:28px; background:linear-gradient(145deg,#14223a,#0c1220); position:relative; overflow:hidden; display:grid; place-items:center; }
+    .about-art::before { content:""; position:absolute; width:340px; height:340px; border-radius:50%; border:1px solid rgba(101,230,220,.25); box-shadow:0 0 0 35px rgba(101,230,220,.025),0 0 0 75px rgba(101,230,220,.02); }
+    .about-art::after { content:""; position:absolute; width:220px; height:220px; border-radius:50%; background:radial-gradient(circle,#68e5d8 0%,#446da7 45%,transparent 72%); filter:blur(2px); opacity:.85; }
+    .art-label { position:absolute; z-index:2; padding:12px 16px; border-radius:12px; border:1px solid var(--line); background:rgba(8,11,19,.7); font-size:.78rem; color:#d8e5f3; }
+    .art-label.a { top:17%; left:8%; } .art-label.b { bottom:18%; right:7%; } .art-label.c { top:24%; right:8%; color:var(--cyan); }
+    .about-content .section-copy { margin:18px 0 26px; }
+    .check-list { list-style:none; display:grid; gap:14px; margin:26px 0 30px; }
+    .check-list li { display:flex; align-items:center; gap:12px; color:#d5deec; font-size:.94rem; }
+    .check { width:22px; height:22px; flex:0 0 22px; border-radius:50%; display:grid; place-items:center; background:rgba(101,230,220,.12); color:var(--cyan); font-size:.75rem; }
+
+    .stats { display:grid; grid-template-columns:repeat(4,1fr); border:1px solid var(--line); border-radius:22px; overflow:hidden; background:rgba(16,22,37,.55); margin-top:70px; }
+    .stat { padding:27px 20px; text-align:center; border-right:1px solid var(--line); }
+    .stat:last-child { border:0; }
+    .stat strong { display:block; font:700 2.15rem "Space Grotesk"; letter-spacing:-.06em; color:var(--cyan); }
+    .stat span { color:var(--muted); font-size:.82rem; }
+
+    .work-grid { display:grid; grid-template-columns:1.15fr .85fr; gap:18px; }
+    .project { min-height:300px; border-radius:24px; border:1px solid var(--line); overflow:hidden; position:relative; padding:28px; display:flex; flex-direction:column; justify-content:space-between; background:#111a2b; }
+    .project:first-child { grid-row:span 2; min-height:510px; background:radial-gradient(circle at 70% 35%,rgba(75,205,194,.24),transparent 35%),linear-gradient(135deg,#172b3c,#111626); }
+    .project:nth-child(2) { background:radial-gradient(circle at 80% 15%,rgba(146,115,255,.24),transparent 32%),linear-gradient(135deg,#211b3a,#121625); }
+    .project:nth-child(3) { background:radial-gradient(circle at 80% 15%,rgba(255,174,113,.18),transparent 32%),linear-gradient(135deg,#302331,#141725); }
+    .project-top { display:flex; justify-content:space-between; align-items:center; }
+    .tag { border:1px solid rgba(255,255,255,.16); border-radius:999px; padding:6px 11px; color:#bdc8d8; font-size:.72rem; }
+    .project-art { flex:1; display:grid; place-items:center; min-height:150px; }
+    .dashboard-art { width:80%; max-width:390px; border:1px solid rgba(255,255,255,.2); border-radius:14px; padding:14px; background:rgba(7,14,25,.65); transform:rotate(-5deg); box-shadow:0 25px 50px rgba(0,0,0,.25); }
+    .dash-bar { height:7px; width:38%; border-radius:5px; background:#65e6dc; margin-bottom:14px; }
+    .dash-row { display:grid; grid-template-columns:1.2fr .8fr; gap:8px; margin-top:8px; }
+    .dash-box { height:58px; border-radius:7px; background:linear-gradient(135deg,rgba(101,230,220,.28),rgba(101,230,220,.04)); border:1px solid rgba(101,230,220,.13); }
+    .dash-box:nth-child(2) { background:linear-gradient(135deg,rgba(128,145,255,.3),rgba(128,145,255,.04)); }
+    .project h3 { font-size:1.35rem; margin:8px 0 5px; }
+    .project p { color:#a9b5c7; font-size:.88rem; max-width:430px; }
+    .project-arrow { width:38px; height:38px; display:grid; place-items:center; border-radius:50%; background:rgba(255,255,255,.09); }
+
+    .process-grid { display:grid; grid-template-columns:repeat(4,1fr); gap:16px; margin-top:48px; }
+    .process-step { padding:25px 22px; border-top:1px solid rgba(101,230,220,.45); background:linear-gradient(180deg,rgba(101,230,220,.045),transparent); }
+    .step-no { color:var(--cyan); font:600 .8rem "Space Grotesk"; letter-spacing:.1em; }
+    .process-step h3 { margin:16px 0 8px; font-size:1.15rem; }
+    .process-step p { color:var(--muted); font-size:.87rem; }
+
+    .cta { padding:70px 30px; border:1px solid rgba(101,230,220,.22); border-radius:30px; text-align:center; background:radial-gradient(ellipse at 50% 0%,rgba(101,230,220,.14),transparent 55%),linear-gradient(135deg,#121d30,#101525); position:relative; overflow:hidden; }
+    .cta h2 { max-width:720px; margin:15px auto; }
+    .cta p { color:var(--muted); max-width:580px; margin:0 auto 27px; }
+
+    .contact-grid { display:grid; grid-template-columns:.85fr 1.15fr; gap:65px; align-items:start; }
+    .contact-details { margin-top:32px; display:grid; gap:20px; }
+    .contact-item { display:flex; align-items:center; gap:14px; color:#dce5f2; }
+    .contact-item .service-icon { margin:0; width:43px; height:43px; font-size:1rem; }
+    .contact-item small { display:block; color:var(--muted); font-size:.75rem; }
+    .contact-form { padding:30px; border-radius:23px; border:1px solid var(--line); background:rgba(17,25,41,.8); }
+    .form-row { display:grid; grid-template-columns:1fr 1fr; gap:14px; }
+    .field { margin-bottom:16px; }
+    .field label { display:block; font-size:.8rem; color:#bdc8d8; margin-bottom:7px; }
+    .field input,.field textarea { width:100%; padding:13px 14px; color:white; background:#0b1220; border:1px solid rgba(255,255,255,.11); border-radius:11px; outline:none; transition:.2s; }
+    .field input:focus,.field textarea:focus { border-color:rgba(101,230,220,.6); box-shadow:0 0 0 3px rgba(101,230,220,.07); }
+    .field textarea { min-height:125px; resize:vertical; }
+    .form-note { color:#7e8ba2; font-size:.74rem; margin-top:12px; }
+    #form-status { color:var(--cyan); font-size:.84rem; margin-top:12px; min-height:20px; }
+
+    footer { border-top:1px solid var(--line); padding:28px 0; color:#8592a8; font-size:.8rem; }
+    .footer-inner { display:flex; justify-content:space-between; align-items:center; gap:20px; }
+    .footer-links { display:flex; gap:20px; }
+    .footer-links a:hover { color:var(--cyan); }
+
+    .reveal { opacity:0; transform:translateY(22px); transition:opacity .7s ease,transform .7s ease; }
+    .reveal.visible { opacity:1; transform:translateY(0); }
+    @keyframes float { 0%,100%{transform:translateY(0) rotate(-3deg)} 50%{transform:translateY(-15px) rotate(2deg)} }
+
+    @media (max-width: 900px) {
+      .hero-grid,.about-wrap,.contact-grid { grid-template-columns:1fr; }
+      .hero { padding-top:130px; min-height:auto; }
+      .hero-visual { min-height:420px; }
+      .section-head { display:block; }
+      .section-head .section-copy { margin-top:15px; }
+      .services-grid { grid-template-columns:repeat(2,1fr); }
+      .about-wrap { gap:40px; }
+      .about-art { min-height:360px; }
+      .contact-grid { gap:35px; }
+    }
+    @media (max-width: 650px) {
+      .container { width:min(100% - 34px,var(--max)); }
+      nav { height:70px; }
+      .menu-toggle { display:block; }
+      .nav-actions > .btn { display:none; }
+      .nav-links { display:none; position:absolute; top:70px; left:17px; right:17px; padding:18px; border:1px solid var(--line); border-radius:16px; background:rgba(12,18,31,.97); backdrop-filter:blur(15px); flex-direction:column; align-items:stretch; gap:0; }
+      .nav-links.open { display:flex; }
+      .nav-links a { padding:12px 8px; border-bottom:1px solid rgba(255,255,255,.06); }
+      .nav-links a:last-child { border:0; }
+      .hero { padding:120px 0 65px; }
+      .hero h1 { font-size:clamp(2.8rem,14vw,4.4rem); }
+      .hero-copy { font-size:1rem; }
+      .hero-visual { min-height:350px; }
+      .orb { width:280px; }
+      .float-card.one { left:0; top:5%; } .float-card.two { right:0; bottom:7%; }
+      .scroll-cue { display:none; }
+      section.content-section { padding:78px 0; }
+      .services-grid,.work-grid,.process-grid { grid-template-columns:1fr; }
+      .project:first-child { grid-row:auto; min-height:420px; }
+      .project { min-height:300px; }
+      .stats { grid-template-columns:repeat(2,1fr); }
+      .stat:nth-child(2) { border-right:0; }
+      .stat:nth-child(-n+2) { border-bottom:1px solid var(--line); }
+      .form-row { grid-template-columns:1fr; gap:0; }
+      .contact-form { padding:21px; }
+      .cta { padding:55px 22px; }
+      .footer-inner { flex-direction:column; text-align:center; }
+    }
+    @media (prefers-reduced-motion: reduce) { *,*::before,*::after { scroll-behavior:auto!important; animation:none!important; transition:none!important; } .reveal { opacity:1; transform:none; } }
+  </style>
+</head>
+<body>
+  <header class="site-header" id="header">
+    <div class="container">
+      <nav aria-label="Main navigation">
+        <a class="logo" href="#home" aria-label="IVIS Labs home"><span class="logo-mark">i</span> IVIS<span class="gradient-text">Labs</span></a>
+        <div class="nav-links" id="navLinks">
+          <a href="#services">Services</a><a href="#about">About</a><a href="#work">Our Work</a><a href="#process">Process</a><a href="#contact">Contact</a>
+        </div>
+        <div class="nav-actions">
+          <a class="btn btn-primary" href="#contact">Let's Talk <span class="arrow">↗</span></a>
+          <button class="menu-toggle" id="menuToggle" aria-label="Toggle navigation" aria-expanded="false">☰</button>
+        </div>
+      </nav>
+    </div>
+  </header>
+
+  <main>
+    <section class="hero" id="home">
+      <div class="container hero-grid">
+        <div class="hero-content reveal">
+          <span class="eyebrow">Technology that moves you forward</span>
+          <h1>Build what's <span class="gradient-text">next.</span><br>Make it matter.</h1>
+          <p class="hero-copy">We turn ambitious ideas into intelligent digital experiences. From AI-powered solutions to scalable software, we help businesses move from possibility to progress.</p>
+          <div class="hero-buttons">
+            <a class="btn btn-primary" href="#contact">Start a Project <span class="arrow">↗</span></a>
+            <a class="btn btn-ghost" href="#services">Explore What We Do</a>
+          </div>
+          <div class="hero-note"><div class="avatar-stack"><span></span><span></span><span></span></div><span>Ideas, engineering &amp; impact — working together.</span></div>
+        </div>
+        <div class="hero-visual reveal" aria-label="Abstract digital intelligence illustration">
+          <div class="orb"><div class="orb-core">AI</div><span class="orbit"></span></div>
+          <div class="float-card one"><small>Our focus</small><strong>Human-first tech</strong></div>
+          <div class="float-card two"><small>Built for tomorrow</small><strong>Think. Create. Scale.</strong></div>
+        </div>
+      </div>
+      <div class="scroll-cue">Scroll to explore</div>
+    </section>
+
+    <div class="trust-strip">
+      <div class="container">
+        <div class="trust-label">Technology capabilities for a changing world</div>
+        <div class="trust-items"><span>ARTIFICIAL INTELLIGENCE</span><span>✳ CLOUD</span><span>DATA &amp; ANALYTICS</span><span>SOFTWARE</span><span>EDTECH</span></div>
+      </div>
+    </div>
+
+    <section class="content-section" id="services">
+      <div class="container">
+        <div class="section-head reveal">
+          <div><span class="eyebrow">What we do</span><h2>Technology built around <span class="gradient-text">your ambition.</span></h2></div>
+          <p class="section-copy">The right technology should solve real problems, create better experiences and open up new opportunities. That's where we focus.</p>
+        </div>
+        <div class="services-grid">
+          <article class="service-card reveal"><div class="service-icon">✧</div><h3>AI &amp; Intelligent Solutions</h3><p>Practical AI, intelligent automation, chatbots and agentic workflows that help teams work smarter.</p><a class="service-link" href="#contact">Explore AI solutions ↗</a></article>
+          <article class="service-card reveal"><div class="service-icon">⌘</div><h3>Web &amp; Software Development</h3><p>Modern websites, applications and custom platforms designed for performance, usability and growth.</p><a class="service-link" href="#contact">Build your product ↗</a></article>
+          <article class="service-card reveal"><div class="service-icon">◈</div><h3>Cloud &amp; DevOps</h3><p>Cloud-ready architecture, deployment and infrastructure practices that make digital products reliable.</p><a class="service-link" href="#contact">Move to the cloud ↗</a></article>
+          <article class="service-card reveal"><div class="service-icon">▥</div><h3>Data Analytics</h3><p>Transform scattered data into clear dashboards, useful insights and confident business decisions.</p><a class="service-link" href="#contact">Unlock your data ↗</a></article>
+          <article class="service-card reveal"><div class="service-icon">◎</div><h3>Training &amp; Enablement</h3><p>Hands-on technology training that helps students and teams build skills through real projects.</p><a class="service-link" href="#contact">Upskill your team ↗</a></article>
+          <article class="service-card reveal"><div class="service-icon">✳</div><h3>Innovation &amp; Prototyping</h3><p>Validate ideas faster with focused discovery, rapid prototypes and practical product guidance.</p><a class="service-link" href="#contact">Shape an idea ↗</a></article>
+        </div>
+      </div>
+    </section>
+
+    <section class="content-section" id="about">
+      <div class="container">
+        <div class="about-wrap">
+          <div class="about-art reveal"><span class="art-label a">Curiosity first</span><span class="art-label b">Built to create impact</span><span class="art-label c">Innovation / 01</span></div>
+          <div class="about-content reveal">
+            <span class="eyebrow">A little about us</span>
+            <h2>We make complex technology feel <span class="gradient-text">simple.</span></h2>
+            <p class="section-copy">At IVIS Labs, we bring people, ideas and technology together to create solutions with purpose. We believe great digital experiences begin with understanding the problem — and end with measurable value.</p>
+            <ul class="check-list">
+              <li><span class="check">✓</span> Solutions shaped around real-world needs</li>
+              <li><span class="check">✓</span> Collaborative, transparent execution</li>
+              <li><span class="check">✓</span> Modern tools with a focus on long-term value</li>
+            </ul>
+            <a class="btn btn-ghost" href="#contact">Get to know us <span class="arrow">↗</span></a>
+          </div>
+        </div>
+        <div class="stats reveal">
+          <div class="stat"><strong>01</strong><span>Think with purpose</span></div>
+          <div class="stat"><strong>02</strong><span>Build with care</span></div>
+          <div class="stat"><strong>03</strong><span>Learn continuously</span></div>
+          <div class="stat"><strong>∞</strong><span>Explore what's possible</span></div>
+        </div>
+      </div>
+    </section>
+
+    <section class="content-section" id="work">
+      <div class="container">
+        <div class="section-head reveal">
+          <div><span class="eyebrow">Ideas in action</span><h2>Designed to solve. <span class="gradient-text">Built to grow.</span></h2></div>
+          <p class="section-copy">A glimpse of the kinds of digital experiences and solutions we love bringing to life.</p>
+        </div>
+        <div class="work-grid">
+          <article class="project reveal">
+            <div class="project-top"><span class="tag">AI · Data · Intelligence</span><span class="project-arrow">↗</span></div>
+            <div class="project-art"><div class="dashboard-art"><div class="dash-bar"></div><div class="dash-row"><div class="dash-box"></div><div class="dash-box"></div></div><div class="dash-row"><div class="dash-box"></div><div class="dash-box"></div></div></div></div>
+            <div><h3>Intelligent business insights</h3><p>Turning information into useful signals with AI-assisted analysis and clear visual storytelling.</p></div>
+          </article>
+          <article class="project reveal">
+            <div class="project-top"><span class="tag">Education · Technology</span><span class="project-arrow">↗</span></div>
+            <div class="project-art"><div style="font-size:5rem;color:#c1aaff;text-shadow:0 0 45px #8f72ff;">✳</div></div>
+            <div><h3>Learning through innovation</h3><p>Practical technology learning experiences that make emerging tools approachable.</p></div>
+          </article>
+          <article class="project reveal">
+            <div class="project-top"><span class="tag">Cloud · Applications</span><span class="project-arrow">↗</span></div>
+            <div class="project-art"><div style="font-size:4.5rem;color:#ffbd8b;text-shadow:0 0 40px #ff9d68;">⌘</div></div>
+            <div><h3>Connected digital products</h3><p>Modern application experiences designed to connect workflows, people and services.</p></div>
+          </article>
+        </div>
+        <p class="form-note" style="margin-top:15px;">Project panels above are illustrative examples. Replace them with verified client projects and case studies before publishing.</p>
+      </div>
+    </section>
+
+    <section class="content-section" id="process">
+      <div class="container">
+        <div class="reveal"><span class="eyebrow">How we work</span><h2>From first thought to <span class="gradient-text">real-world impact.</span></h2><p class="section-copy">A clear, collaborative approach keeps every project focused on the outcome that matters.</p></div>
+        <div class="process-grid">
+          <div class="process-step reveal"><span class="step-no">01 / DISCOVER</span><h3>Understand</h3><p>We listen, ask the right questions and define the challenge.</p></div>
+          <div class="process-step reveal"><span class="step-no">02 / DEFINE</span><h3>Plan</h3><p>We shape the scope, priorities and path to a useful solution.</p></div>
+          <div class="process-step reveal"><span class="step-no">03 / DEVELOP</span><h3>Create</h3><p>We design, build and refine through thoughtful collaboration.</p></div>
+          <div class="process-step reveal"><span class="step-no">04 / DELIVER</span><h3>Improve</h3><p>We launch, learn and keep making the experience better.</p></div>
+        </div>
+      </div>
+    </section>
+
+    <section class="content-section">
+      <div class="container">
+        <div class="cta reveal">
+          <span class="eyebrow">Have an idea?</span>
+          <h2>Your next big move starts with a <span class="gradient-text">conversation.</span></h2>
+          <p>Tell us what you're working on. Let's explore how the right technology can move it forward.</p>
+          <a class="btn btn-primary" href="#contact">Let's build something <span class="arrow">↗</span></a>
+        </div>
+      </div>
+    </section>
+
+    <section class="content-section" id="contact">
+      <div class="container contact-grid">
+        <div class="reveal">
+          <span class="eyebrow">Get in touch</span>
+          <h2>Let's make something <span class="gradient-text">meaningful.</span></h2>
+          <p class="section-copy">Have a project, partnership idea or training requirement? Send us a message and let's take the first step.</p>
+          <div class="contact-details">
+            <div class="contact-item"><div class="service-icon">✉</div><div><small>Email us</small><span>hello@ivislabs.com</span></div></div>
+            <div class="contact-item"><div class="service-icon">⌖</div><div><small>Find us</small><span>Mysuru, Karnataka, India</span></div></div>
+            <div class="contact-item"><div class="service-icon">↗</div><div><small>Let's connect</small><span>Business · Projects · Training</span></div></div>
+          </div>
+          <p class="form-note">Replace the sample email and location details with your official company contact information.</p>
+        </div>
+        <form class="contact-form reveal" id="contactForm">
+          <div class="form-row">
+            <div class="field"><label for="name">Your name</label><input id="name" name="name" placeholder="Enter your name" required></div>
+            <div class="field"><label for="email">Email address</label><input id="email" name="email" type="email" placeholder="you@company.com" required></div>
+          </div>
+          <div class="field"><label for="subject">What can we help with?</label><input id="subject" name="subject" placeholder="Project, AI solution, training..." required></div>
+          <div class="field"><label for="message">Tell us a little more</label><textarea id="message" name="message" placeholder="Share a few details about your idea..." required></textarea></div>
+          <button class="btn btn-primary" type="submit">Prepare message <span class="arrow">↗</span></button>
+          <p class="form-note">This demo form opens your default email app. Connect a backend or form service to receive submissions online.</p>
+          <p id="form-status" role="status" aria-live="polite"></p>
+        </form>
+      </div>
+    </section>
+  </main>
+
+  <footer>
+    <div class="container footer-inner">
+      <a class="logo" href="#home"><span class="logo-mark">i</span> IVIS<span class="gradient-text">Labs</span></a>
+      <span>© <span id="year"></span> IVIS Labs. All rights reserved.</span>
+      <div class="footer-links"><a href="#services">Services</a><a href="#about">About</a><a href="#contact">Contact</a></div>
+    </div>
+  </footer>
+
+  <script>
+    // Sticky navigation
+    const header = document.getElementById('header');
+    window.addEventListener('scroll', () => header.classList.toggle('scrolled', window.scrollY > 20));
+
+    // Mobile navigation
+    const menuToggle = document.getElementById('menuToggle');
+    const navLinks = document.getElementById('navLinks');
+    menuToggle.addEventListener('click', () => {
+      const isOpen = navLinks.classList.toggle('open');
+      menuToggle.setAttribute('aria-expanded', String(isOpen));
+      menuToggle.textContent = isOpen ? '✕' : '☰';
+    });
+    navLinks.querySelectorAll('a').forEach(link => link.addEventListener('click', () => {
+      navLinks.classList.remove('open');
+      menuToggle.setAttribute('aria-expanded', 'false');
+      menuToggle.textContent = '☰';
+    }));
+
+    // Reveal sections as they enter the viewport
+    const observer = new IntersectionObserver(entries => {
+      entries.forEach(entry => {
+        if (entry.isIntersecting) {
+          entry.target.classList.add('visible');
+          observer.unobserve(entry.target);
+        }
+      });
+    }, { threshold: 0.12 });
+    document.querySelectorAll('.reveal').forEach(el => observer.observe(el));
+
+    // Contact form: prepares an email (front-end only)
+    document.getElementById('contactForm').addEventListener('submit', event => {
+      event.preventDefault();
+      const form = event.currentTarget;
+      if (!form.reportValidity()) return;
+      const data = new FormData(form);
+      const subject = encodeURIComponent(data.get('subject'));
+      const body = encodeURIComponent(
+        `Name: ${data.get('name')}\\nEmail: ${data.get('email')}\\n\\n${data.get('message')}`
+      );
+      document.getElementById('form-status').textContent = 'Opening your email app with the message details…';
+      window.location.href = `mailto:hello@ivislabs.com?subject=${subject}&body=${body}`;
+    });
+
+    document.getElementById('year').textContent = new Date().getFullYear();
+  </script>
+</body>
+</html>
